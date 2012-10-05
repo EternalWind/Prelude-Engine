@@ -41,7 +41,7 @@ void* __malloc_alloc::oom_alloc(size_t bytes)
 	{
 		if (!oom_alloc_handler) 
 		{
-			__PL_THROW_BAD_ALLOC;
+			__PL_THROW_BAD_ALLOC; 
 		}
 		oom_alloc_handler();
 		result = malloc(bytes);
@@ -135,6 +135,7 @@ void* __default_alloc::refill(size_t bytes)
 		return result;
 	}
 
+	// *my_free_list points to the current free list
 	my_free_list = free_list + FREELIST_INDEX(bytes);
 	*my_free_list = next_block = (obj*)(pool + bytes);
 
@@ -166,7 +167,7 @@ char* __default_alloc::memory_pool_alloc(size_t unit, size_t& nsize)
 		begin_free += total_bytes;
 		return result;
 	} 
-	else if (unit <= bytes_left) 
+	else if (unit <= bytes_left)  // not less than 1 unit 
 	{
 		nsize = bytes_left / unit;
 		result = begin_free;
@@ -190,7 +191,7 @@ char* __default_alloc::memory_pool_alloc(size_t unit, size_t& nsize)
 
 		size_t bytes_to_get = total_bytes * 2 + ROUND_UP(heap_size >> 4);
 		begin_free = (char*)malloc(bytes_to_get);
-		// If alloc failed
+		// If alloc failed, find whether there are any free blocks in existed free_list
 		if (!begin_free) 
 		{
 			for (size_t now = unit + __ALIGN; now <= __MAX_BLOCK_SIZE; now += __ALIGN) 
@@ -230,12 +231,12 @@ void __default_alloc::deallocate(void *p, size_t bytes)
 
 void* __default_alloc::reallocate(void *p, size_t old_size, size_t new_size) 
 {
-	if (new_size > __MAX_BLOCK_SIZE && old_size > __MAX_BLOCK_SIZE) 
-	{
+	if (new_size > __MAX_BLOCK_SIZE && old_size > __MAX_BLOCK_SIZE)  
+	{   // Not in free_list  
 		return realloc(p, new_size);
 	}
 	if (ROUND_UP(new_size) == ROUND_UP(old_size)) 
-	{
+	{   // Points to the same block
 		return p;
 	}
 

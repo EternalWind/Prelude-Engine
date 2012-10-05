@@ -37,11 +37,21 @@ public:
 
 private:
 
+	/**
+	  * Out-of-memory allocate function
+	  * @param bytes Size of allocated bytes
+	  * @returns A new block of memory
+	  */
 	static void* oom_alloc(size_t bytes);
 
+	/**
+	  * Out-of-memory reallocate function
+	  * @param p Pointer to be reallocated
+	  * @param bytes Size of reallocated bytes
+	  */
 	static void* oom_realloc(void *p, size_t bytes);
 
-	static void (*oom_alloc_handler)();
+	static void (*oom_alloc_handler)(); //!<  
 
 };
 
@@ -72,20 +82,34 @@ private:
 		char cdata[1];
 	};
 
-	static obj * volatile free_list[__LIST_SIZE];
+	static obj * volatile free_list[__LIST_SIZE];		//!< arrays of pointers to the free blocks
 
-	static char* begin_free;
-	
-	static char* end_free;
+	static char* begin_free;							//!< begin of memory pool
+	static char* end_free;								//!< end of memory pool
+	static size_t heap_size;							//!< size of alloc-heap
 
-	static size_t heap_size;
-
+	/**
+	  * Refill the free_list 
+	  * @param bytes Size of block needed to be refilled
+	  * @returns A block of new-allocate memory
+	  */
 	static void* refill(size_t bytes);
 
+	/**
+	  * Call when free_list is out of memory, returns a continuous piece of memory
+	  * @param unit Size of memory block
+	  * @param nsize Counts of blocks to get
+	  * @returns a piece of continous memory
+	  */
 	static char* memory_pool_alloc(size_t unit, size_t& nsize);
 
 	static size_t ROUND_UP(size_t bytes);
 
+	/**
+	  * Returns free_list index
+	  * @param bytes Size of memory block
+	  * @returns free_list index
+	  */
 	static size_t FREELIST_INDEX(size_t bytes);
 };
 

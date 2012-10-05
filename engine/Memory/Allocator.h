@@ -3,6 +3,8 @@
 
 #include "Memory/Alloc.h"
 
+#include "Core/Config.h"
+
 #ifndef __USE_DEFAULT_ALLOC
 #define __USE_DEFAULT_ALLOC (1)
 #endif
@@ -21,7 +23,7 @@ namespace Memory
 /**
   * A simple allocator interface
   */
-class Allocator 
+class PRELUDE_ENGINE Allocator 
 {
 public:
 	/**

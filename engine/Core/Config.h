@@ -1,5 +1,5 @@
-#ifndef PL_CORE_GLOBAL_CONFIG
-#define PL_CORE_GLOBAL_CONFIG
+#ifndef PL_CORE_CONFIG
+#define PL_CORE_CONFIG
 
 #include <cstdint>
 
@@ -20,9 +20,19 @@ typedef int32_t byte4;
 typedef int64_t byte8;
 
 
+#include "Memory/Allocator.h"
+
 #define __DeclareClass(ClassType) \
 public: \
 	static const size_t mObjectSize; \
+	void* operator new(size_t size) \
+	{ \
+		return Memory::Allocator::allocate(size); \
+	} \
+	void operator delete(void * p) \
+	{\
+		Memory::Allocator::deallocate(p, ClassType::mObjectSize); \
+	}
 
 
 #define __DefiniteClass(ClassType) \
