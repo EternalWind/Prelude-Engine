@@ -4,3 +4,4 @@ lib/
 dependencies/*
 docs/doxygen
 *.log
+sample/src/main.cpp

@@ -6,15 +6,16 @@
 #define __PL_THROW_BAD_ALLOC std::cerr << "out of memory" << std::endl; exit(1);
 #endif
 
-namespace pl {
-
-namespace Memory {
-
+namespace pl 
+{
+namespace Memory 
+{
 /**
   * A lower-class allocator attempt to allocate more than 128 bytes memory
   * Out-of-memory measure is included
   */
-class __malloc_alloc {
+class __malloc_alloc 
+{
 public:
 	static void* allocate(size_t bytes);
 
@@ -27,7 +28,8 @@ public:
 	  * @param f new oom-handler
 	  * @returns origin oom-handler
 	  */
-	void (*set_oom_alloc_handler(void(*f)()))() {
+	void (*set_oom_alloc_handler(void(*f)()))() 
+	{
 		void (*origin)() = oom_alloc_handler;
 		oom_alloc_handler = f;
 		return origin;
@@ -47,7 +49,8 @@ private:
 /**
   * Default allocator that only allocate not large than 128bytes memory
   */
-class __default_alloc {
+class __default_alloc 
+{
 public:
 	static void* allocate(size_t bytes);
 
@@ -63,7 +66,8 @@ public:
 
 private:
 
-	union obj {
+	union obj 
+	{
 		union obj* next_free_block;
 		char cdata[1];
 	};

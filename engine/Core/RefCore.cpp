@@ -1,10 +1,11 @@
 #include "Core/RefCore.h"
 
-namespace pl {
+namespace pl 
+{
+namespace Core 
+{
 
-namespace Core {
-
-	__DefiniteClass(RefCore)
+__DefiniteClass(RefCore)
 
 } // end of namespace 
 

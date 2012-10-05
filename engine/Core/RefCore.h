@@ -4,18 +4,19 @@
 #include "Core/CoreConfig.h"
 #include "Memory/Allocator.h"
 
-namespace pl {
+namespace pl 
+{
+namespace Core 
+{
 
-namespace Core {
-
-class RefCore {
+class RefCore 
+{
 	__DeclareClass(RefCore)
 public:
 
 };
 
 } // end of namespace Core
-
 } // end of namespace pl
 
 #endif

@@ -17,4 +17,5 @@ endif()
 include_directories(SYSTEM)
 
 add_subdirectory(engine)
+add_subdirectory(sample)
 
