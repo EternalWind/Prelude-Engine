@@ -1,7 +1,7 @@
 #ifndef PL_CORE_REFCORE
 #define PL_CORE_REFCORE
 
-#include "Core/CoreConfig.h"
+#include "Core/GlobalConfig.h"
 #include "Memory/Allocator.h"
 
 namespace pl 
