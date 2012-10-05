@@ -1,9 +1,9 @@
-#ifndef PL_CORE_CORECONFIG
-#define PL_CORE_CORECONFIG
+#ifndef PL_CORE_GLOBAL_CONFIG
+#define PL_CORE_GLOBAL_CONFIG
 
 #include <cstdint>
 
-#ifdef Prelude_Engine_EXPORTS
+#ifdef Prelude_EXPORTS
 #define PRELUDE_ENGINE __declspec(dllexport)
 #else
 #define PRELUDE_ENGINE __declspec(dllimport)
