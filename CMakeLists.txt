@@ -6,7 +6,15 @@ if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build(Debug or Release)" FORCE)
 endif()
 
+set(BUILD_STATIC FALSE CACHE BOOL "true to build static libraries, false to build dynamic libraries (preferred)")
+
+if(BUILD_STATIC)
+    add_definitions(-DPRELUDE_STATIC)
+endif()
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
 if(BUILD_STATIC)
     set(BUILD_MODE STATIC)
