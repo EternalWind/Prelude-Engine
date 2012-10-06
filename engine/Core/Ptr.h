@@ -32,7 +32,8 @@ public:
 	  * Constructor
 	  * @param p Original pointer
 	  */
-	template <class Y> explicit Ptr(Y * p);
+	template <class Y> 
+	explicit Ptr(Y * p);
 
 	/**
 	  * Copy constructor
