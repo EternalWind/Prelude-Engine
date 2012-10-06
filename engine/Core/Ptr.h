@@ -20,7 +20,7 @@ public:
 	/**
 	  * Default constructor
 	  */
-    Ptr();
+    	Ptr();
 
 	/**
 	  * Construtor
