@@ -10,12 +10,12 @@ template<class T>
 class Ptr 
 {
 public:
-	Ptr();
+    Ptr() {}
 
-	Ptr(const Ptr<T> & rhs);
+    Ptr(const Ptr<T> & rhs) {}
 
 
-}
+};
 
 } // end of namespace Core
 

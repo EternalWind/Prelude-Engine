@@ -23,7 +23,7 @@ namespace Memory
 /**
   * A simple allocator interface
   */
-class PRELUDE_ENGINE Allocator 
+class Allocator 
 {
 public:
 	/**
