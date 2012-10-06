@@ -21,8 +21,9 @@ typedef int64_t byte8;
 
 
 #define __DeclareClass(ClassType) \
-public: \
+private: \
 	static const size_t mObjectSize; \
+public: \
 	void* operator new(size_t size) \
 	{ \
 		return Memory::Allocator::allocate(size); \
@@ -32,8 +33,10 @@ public: \
 		Memory::Allocator::deallocate(p, ClassType::mObjectSize); \
 	}
 
-
 #define __DefiniteClass(ClassType) \
 	const size_t ClassType::mObjectSize = sizeof(ClassType);
+
+#define __DefiniteTemplateClass(ClassType, TemplateType) \
+	const size_t ClassType<TemplateType>::mObjectSize = sizeof(ClassType<TemplateType>);
 
 #endif
