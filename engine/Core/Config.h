@@ -20,8 +20,6 @@ typedef int32_t byte4;
 typedef int64_t byte8;
 
 
-#include "Memory/Allocator.h"
-
 #define __DeclareClass(ClassType) \
 public: \
 	static const size_t mObjectSize; \
