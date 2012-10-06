@@ -73,6 +73,13 @@ void* __malloc_alloc::oom_realloc(void *p, size_t bytes)
 	return result;
 }
 
+void (*__malloc_alloc::set_oom_alloc_handler(void(*f)()))() 
+{
+	void (*origin)() = oom_alloc_handler;
+	oom_alloc_handler = f;
+	return origin;
+}
+
 // __default_alloc
 char* __default_alloc::begin_free = 0;
 char* __default_alloc::end_free = 0;

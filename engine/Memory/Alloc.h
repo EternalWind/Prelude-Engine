@@ -28,12 +28,7 @@ public:
 	  * @param f new oom-handler
 	  * @returns origin oom-handler
 	  */
-	void (*set_oom_alloc_handler(void(*f)()))() 
-	{
-		void (*origin)() = oom_alloc_handler;
-		oom_alloc_handler = f;
-		return origin;
-	}
+	void (*set_oom_alloc_handler(void(*f)()))();
 
 private:
 

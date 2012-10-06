@@ -23,7 +23,7 @@ namespace Memory
 /**
   * A simple allocator interface
   */
-class Allocator 
+class PRELUDE_ENGINE Allocator 
 {
 public:
 	/**
@@ -31,35 +31,23 @@ public:
 	  * @param bytes Size of memory to allocate
 	  * @returns A piece of continuous memory
 	  */
-	static void * allocate(size_t bytes) 
-	{
-		return Alloc::allocate(bytes);
-	}
+	static void * allocate(size_t bytes); 
 
-	static void * allocate() 
-	{
-		return Alloc::allocate(4);
-	}
+	static void * allocate(); 
 
 	/**
 	  * Reallocate a piece of continuous memory
 	  * @param bytes Size of memory to reallocate
 	  * @returns A piece of continuous memory
 	  */
-	static void* reallocate(void * p, size_t old_size, size_t new_size) 
-	{
-		return Alloc::reallocate(p, old_size, new_size);
-	}
+	static void* reallocate(void * p, size_t old_size, size_t new_size); 
 
 	/**
 	  * Deallocate a piece of continuous memory
 	  * @param p pointer of the memory to deallocate
 	  * @param bytes Size of memory to deallocate
 	  */
-	static void deallocate(void * p, size_t bytes) 
-	{
-		Alloc::deallocate(p, bytes);
-	}
+	static void deallocate(void * p, size_t bytes);
 };
 
 } // end of namespace Memory
