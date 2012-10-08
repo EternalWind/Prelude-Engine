@@ -25,6 +25,11 @@ void Allocator::deallocate(void * p, size_t bytes)
 	Alloc::deallocate(p, bytes);
 }
 
+void Allocator::deallocate(void * p)
+{
+	Alloc::deallocate(p, 4);
+}
+
 } // end of namespace Memory
 
 } // end of namespace pl

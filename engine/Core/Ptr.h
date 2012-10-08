@@ -20,7 +20,7 @@ public:
 	/**
 	  * Default constructor
 	  */
-    	Ptr();
+	Ptr();
 
 	/**
 	  * Construtor
@@ -137,8 +137,8 @@ public:
 	T & operator*() const;
 
 private:
-	PtrBase<T>* mBaseCount;						//!< Base counter handler of Ptr
-	template<class Y> friend class Ptr;  //!< Friend class 
+	PtrBase<T>* mBaseCount;               //!< Base counter handler of Ptr
+	template<class Y> friend class Ptr;   //!< Friend class 
 };
 
 template <class T>
@@ -299,7 +299,7 @@ bool Ptr<T>::operator==(const Ptr<Y> & rhs) const
 
 template <class T>
 template <class Y>
-bool Ptr<T>::operator!=(const Ptr<Y> & rhs) const
+bool Ptr<T>::operator!=(const Ptr<Y> & rhs) const 
 {
 	return this->get() != rhs.get();
 }

@@ -21,7 +21,7 @@ namespace Memory
 #endif
 
 /**
-  * A simple allocator interface
+  * A basic allocator, accepct void type
   */
 class PRELUDE_ENGINE Allocator 
 {
@@ -48,7 +48,74 @@ public:
 	  * @param bytes Size of memory to deallocate
 	  */
 	static void deallocate(void * p, size_t bytes);
+
+	static void deallocate(void * p);
 };
+
+
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+/**
+  * Basic data allocator, allow template
+  */
+template <class T>
+class DataAllocator
+{
+public:
+	typedef T		value_type;
+	typedef T*		pointer;
+	typedef size_t	size_type;
+	
+	static pointer allocate(size_type n);
+
+	static pointer allocate();
+
+	static void deallocate(pointer p, size_type n);
+
+	static void deallocate(pointer p);
+
+	static pointer reallocate(pointer p, size_type old_size, size_type new_size);
+};
+
+template <class T>
+typename DataAllocator<T>::pointer 
+	DataAllocator<T>::allocate(typename DataAllocator<T>::size_type n)
+{
+	return (pointer)Alloc::allocate(sizeof(value_type) * n);
+}
+
+template <class T>
+typename DataAllocator<T>::pointer 
+	DataAllocator<T>::allocate()
+{
+	return (pointer)Alloc::allocate(sizeof(value_type));
+}
+
+template <class T>
+typename DataAllocator<T>::pointer
+	DataAllocator<T>::reallocate(
+	typename DataAllocator<T>::pointer p,
+	typename DataAllocator<T>::size_type old_size,
+	typename DataAllocator<T>::size_type new_size)
+{
+	return (pointer)Alloc::reallocate((pointer)p, sizeof(value_type) * old_size, sizeof(value_type) * new_size);	
+}
+
+template <class T>
+void DataAllocator<T>::deallocate(
+	typename DataAllocator<T>::pointer p,
+	typename DataAllocator<T>::size_type n)
+{
+	Alloc::deallocate((pointer)p, sizeof(value_type) * n);
+}
+
+template <class T>
+void DataAllocator<T>::deallocate(
+	typename DataAllocator<T>::pointer p)
+{
+	Alloc::deallocate((pointer)p, sizeof(value_type));
+}
 
 } // end of namespace Memory
 
