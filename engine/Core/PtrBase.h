@@ -57,7 +57,7 @@ private:
 };
 
 template <class T>
-IMPLEMENT_PRELUDE_TEMPLATE_OBJECT(PtrBase, T)
+IMPL_PRELUDE_TEMPLATE_OBJECT(PtrBase, T)
 
 template <class T>
 PtrBase<T>::PtrBase(T * p) 
