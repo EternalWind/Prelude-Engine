@@ -4,7 +4,7 @@
 #include "Core/Config.h"
 #include "Core/PtrBase.h"
 
-namespace pl
+namespace Prelude
 {
 namespace Core
 {
@@ -324,5 +324,5 @@ T & Ptr<T>::operator*() const
 
 } // end of namespace Core
 
-} // end of namespace pl
+} // end of namespace Prelude
 #endif

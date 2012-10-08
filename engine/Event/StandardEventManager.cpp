@@ -1,6 +1,6 @@
 #include "Event/StandardEventManager.h"
 
-namespace pl
+namespace Prelude
 {
 namespace Event
 {
@@ -261,4 +261,4 @@ StandardEventManager::ListenerList StandardEventManager::getRegisteredListeners(
 
 } // End of namespace Event
 
-} // End of namespace pl
+} // End of namespace Prelude
