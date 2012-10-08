@@ -34,10 +34,10 @@ public: \
 		Memory::Allocator::deallocate(p, ClassType::mObjectSize); \
 	}
 
-#define IMPLEMENT_PRELUDE_OBJECT(ClassType) \
+#define IMPL_PRELUDE_OBJECT(ClassType) \
 	const size_t ClassType::mObjectSize = sizeof(ClassType);
 
-#define IMPLEMENT_PRELUDE_TEMPLATE_OBJECT(ClassType, TemplateType) \
+#define IMPL_PRELUDE_TEMPLATE_OBJECT(ClassType, TemplateType) \
 	const size_t ClassType<TemplateType>::mObjectSize = sizeof(ClassType<TemplateType>);
 
 #endif
