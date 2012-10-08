@@ -16,7 +16,7 @@ namespace Core
 template <class T>
 class PtrBase
 {
-	__DeclareClass(PtrBase)
+	PRELUDE_OBJECT(PtrBase)
 public:
 
 	/**
@@ -57,7 +57,7 @@ private:
 };
 
 template <class T>
-__DefiniteTemplateClass(PtrBase, T)
+IMPLEMENT_PRELUDE_TEMPLATE_OBJECT(PtrBase, T)
 
 template <class T>
 PtrBase<T>::PtrBase(T * p) 
