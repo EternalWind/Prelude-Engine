@@ -6,7 +6,7 @@
 
 #include <ctime>
 
-namespace pl
+namespace Prelude
 {
 namespace Event
 {
@@ -53,6 +53,6 @@ protected:
 
 } // End of namespace Event
 
-} // End of namespace pl
+} // End of namespace Prelude
 
 #endif

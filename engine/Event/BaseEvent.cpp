@@ -4,7 +4,7 @@
 
 using namespace std;
 
-namespace pl
+namespace Prelude
 {
 namespace Event
 {
@@ -45,4 +45,4 @@ BaseEvent::~BaseEvent() {}
 
 } // End of namespace Event
 
-} // End of namespace pl
+} // End of namespace Prelude

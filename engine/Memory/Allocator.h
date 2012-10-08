@@ -9,7 +9,7 @@
 #define USE_DEFAULT_ALLOC (1)
 #endif
 
-namespace pl 
+namespace Prelude 
 {
 namespace Memory 
 {
@@ -120,6 +120,6 @@ void DataAllocator<T>::deallocate(
 
 } // end of namespace Memory
 
-} // end of namespace pl
+} // end of namespace Prelude
 
 #endif

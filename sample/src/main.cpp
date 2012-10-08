@@ -1,13 +1,18 @@
-#include "Memory/allocator.h"
+#include "Memory/Allocator.h"
 #include "Core/Ptr.h"
-using namespace pl::Memory;
-using namespace pl::Core;
+#include "Core/PtrBase.h"
+#include "Util/Iterator.h"
 
-int main(int argc, char** argv) {
-	Allocator allocator;
-    allocator.allocate();
-    Ptr<int> ptr;
 
-    return 0;
+#include <memory>
+#include <assert.h>
+
+
+using namespace std;
+using namespace Prelude;
+
+
+int main()
+{
+
 }
-

@@ -3,7 +3,7 @@
 
 #include "Core/Config.h"
 
-namespace pl 
+namespace Prelude 
 {
 namespace Util 
 {
@@ -60,6 +60,6 @@ struct IteratorTraits<const T*>
 
 } // end of namespace Util
 
-} // end of namespace pl
+} // end of namespace Prelude
 
 #endif

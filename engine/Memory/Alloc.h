@@ -6,7 +6,7 @@
 #define PL_THROW_BAD_ALLOC std::cerr << "out of memory" << std::endl; exit(1);
 #endif
 
-namespace pl 
+namespace Prelude 
 {
 namespace Memory 
 {
@@ -110,6 +110,6 @@ private:
 
 } // end of namespace Memory
 
-} // end of namespace pl
+} // end of namespace Prelude
 
 #endif

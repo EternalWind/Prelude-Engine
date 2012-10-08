@@ -5,7 +5,7 @@
 
 #include "Memory/Allocator.h"
 
-namespace pl
+namespace Prelude
 {
 namespace Core
 {
@@ -97,5 +97,5 @@ bool PtrBase<T>::release()
 
 } // end of namespace Core
 
-} // end of namespace pl
+} // end of namespace Prelude
 #endif

@@ -1,6 +1,6 @@
 #include "Memory/Allocator.h"
 
-namespace pl
+namespace Prelude
 {
 namespace Memory
 {
@@ -32,4 +32,4 @@ void Allocator::deallocate(void * p)
 
 } // end of namespace Memory
 
-} // end of namespace pl
+} // end of namespace Prelude
