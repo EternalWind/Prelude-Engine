@@ -19,6 +19,7 @@ typedef int16_t byte2;
 typedef int32_t byte4;
 typedef int64_t byte8;
 
+#pragma warning(disable : 4251)
 
 #define __DeclareClass(ClassType) \
 private: \
