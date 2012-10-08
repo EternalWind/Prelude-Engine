@@ -1,6 +1,6 @@
 #include "Memory/Alloc.h"
 
-namespace pl 
+namespace Prelude 
 {
 namespace Memory 
 {
@@ -256,4 +256,4 @@ void* DefaultAlloc::reallocate(void *p, size_t old_size, size_t new_size)
 
 } // end of namespace Memory
 
-} // end of namespace pl
+} // end of namespace Prelude

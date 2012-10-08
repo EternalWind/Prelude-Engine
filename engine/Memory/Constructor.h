@@ -1,0 +1,6 @@
+#ifndef PL_MEMORY_CONSTRUCTOR
+#define PL_MEMORY_CONSTRUCTOR
+
+
+
+#endif

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace pl
+namespace Prelude
 {
 namespace IO
 {
@@ -41,6 +41,6 @@ public:
 
 } // End of namespace IO
 
-} // End of namespace pl
+} // End of namespace Prelude
 
 #endif

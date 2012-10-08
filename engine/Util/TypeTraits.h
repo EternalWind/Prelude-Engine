@@ -3,7 +3,7 @@
 
 #define PL_TEMPLATE_NULL template<>
 
-namespace pl 
+namespace Prelude 
 {
 namespace Util 
 {
@@ -233,6 +233,6 @@ PL_TEMPLATE_NULL struct TypeTraits<const char*>
 
 } // End of namespace Util
 
-} // End of namespace pl
+} // End of namespace Prelude
 
 #endif
