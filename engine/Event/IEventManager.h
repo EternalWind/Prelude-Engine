@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace pl
+namespace Prelude
 {
 namespace Event
 {
@@ -76,6 +76,6 @@ typedef shared_ptr<IEventManager> EventManagerSP;
 
 } // End of namespace Event
 
-} // End of namespace pl
+} // End of namespace Prelude
 
 #endif

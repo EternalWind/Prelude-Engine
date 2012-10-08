@@ -3,7 +3,7 @@
 #include <memory>
 #include <strstream>
 
-namespace pl
+namespace Prelude
 {
 namespace Event
 {
@@ -97,4 +97,4 @@ string EventType::toString() const
 
 } // End of namespace Event
 
-} // End of namespace pl
+} // End of namespace Prelude
