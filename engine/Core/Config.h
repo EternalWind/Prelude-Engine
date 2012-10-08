@@ -21,7 +21,7 @@ typedef int64_t byte8;
 
 #pragma warning(disable : 4251)
 
-#define __DeclareClass(ClassType) \
+#define PRELUDE_OBJECT(ClassType) \
 private: \
 	static const size_t mObjectSize; \
 public: \
@@ -34,10 +34,10 @@ public: \
 		Memory::Allocator::deallocate(p, ClassType::mObjectSize); \
 	}
 
-#define __DefiniteClass(ClassType) \
+#define IMPLEMENT_PRELUDE_OBJECT(ClassType) \
 	const size_t ClassType::mObjectSize = sizeof(ClassType);
 
-#define __DefiniteTemplateClass(ClassType, TemplateType) \
+#define IMPLEMENT_PRELUDE_TEMPLATE_OBJECT(ClassType, TemplateType) \
 	const size_t ClassType<TemplateType>::mObjectSize = sizeof(ClassType<TemplateType>);
 
 #endif

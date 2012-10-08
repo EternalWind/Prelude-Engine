@@ -5,8 +5,8 @@
 
 #include "Core/Config.h"
 
-#ifndef __USE_DEFAULT_ALLOC
-#define __USE_DEFAULT_ALLOC (1)
+#ifndef USE_DEFAULT_ALLOC
+#define USE_DEFAULT_ALLOC (1)
 #endif
 
 namespace pl 
@@ -14,15 +14,16 @@ namespace pl
 namespace Memory 
 {
 
-#if __USE_DEFAULT_ALLOC
-	typedef __default_alloc Alloc;
+#if USE_DEFAULT_ALLOC
+	typedef DefaultAlloc Alloc;
 #else 
-	typedef __malloc_alloc Alloc;
+	typedef MallocAlloc Alloc;
 #endif
 
 /**
   * A basic allocator, accepct void type
   */
+
 class PRELUDE_ENGINE Allocator 
 {
 public:
@@ -97,7 +98,7 @@ typename DataAllocator<T>::pointer
 	DataAllocator<T>::reallocate(
 	typename DataAllocator<T>::pointer p,
 	typename DataAllocator<T>::size_type old_size,
-	typename DataAllocator<T>::size_type new_size)
+	typename DataAllocator<T>::size_type new_size) 
 {
 	return (pointer)Alloc::reallocate((pointer)p, sizeof(value_type) * old_size, sizeof(value_type) * new_size);	
 }

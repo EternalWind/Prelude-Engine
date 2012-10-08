@@ -5,45 +5,45 @@ namespace pl
 namespace Memory 
 {
 
-// __malloc_alloc
-void (*__malloc_alloc::oom_alloc_handler)() = 0;
+// MallocAlloc
+void (*MallocAlloc::mOomAllocHandler)() = 0;
 
-void* __malloc_alloc::allocate(size_t bytes) 
+void* MallocAlloc::allocate(size_t bytes) 
 {
 	void *result = malloc(bytes);
 	if (!result) 
 	{
-		result = oom_alloc(bytes);
+		result = oomAlloc(bytes);
 	}
 	return result;
 }
 
-void __malloc_alloc::deallocate(void *p, size_t bytes) 
+void MallocAlloc::deallocate(void *p, size_t bytes) 
 {
 	free(p);
 }
 
-void* __malloc_alloc::reallocate(void *p, size_t old_size, size_t new_size) 
+void* MallocAlloc::reallocate(void *p, size_t old_size, size_t new_size) 
 {
 	void *result = malloc(new_size);
 	if (!result) 
 	{
-		result = oom_realloc(p, new_size);
+		result = oomRealloc(p, new_size);
 	}
 	return result;
 }
 
-void* __malloc_alloc::oom_alloc(size_t bytes) 
+void* MallocAlloc::oomAlloc(size_t bytes) 
 {
 	void *result;
 
 	for (; ; ) 
 	{
-		if (!oom_alloc_handler) 
+		if (!mOomAllocHandler) 
 		{
-			__PL_THROW_BAD_ALLOC; 
+			PL_THROW_BAD_ALLOC; 
 		}
-		oom_alloc_handler();
+		mOomAllocHandler();
 		result = malloc(bytes);
 		if (result)
 		{
@@ -53,17 +53,17 @@ void* __malloc_alloc::oom_alloc(size_t bytes)
 	return result;
 }
 
-void* __malloc_alloc::oom_realloc(void *p, size_t bytes) 
+void* MallocAlloc::oomRealloc(void *p, size_t bytes) 
 {
 	void *result;
 
 	for (; ; ) 
 	{
-		if (!oom_alloc_handler) 
+		if (!mOomAllocHandler) 
 		{
-			__PL_THROW_BAD_ALLOC;
+			PL_THROW_BAD_ALLOC;
 		}
-		oom_alloc_handler();
+		mOomAllocHandler();
 		result = realloc(p, bytes);
 		if (result) 
 		{
@@ -73,48 +73,48 @@ void* __malloc_alloc::oom_realloc(void *p, size_t bytes)
 	return result;
 }
 
-void (*__malloc_alloc::set_oom_alloc_handler(void(*f)()))() 
+void (*MallocAlloc::setOomAllocHandler(void(*f)()))() 
 {
-	void (*origin)() = oom_alloc_handler;
-	oom_alloc_handler = f;
+	void (*origin)() = mOomAllocHandler;
+	mOomAllocHandler = f;
 	return origin;
 }
 
-// __default_alloc
-char* __default_alloc::begin_free = 0;
-char* __default_alloc::end_free = 0;
-size_t __default_alloc::heap_size = 0;
+// DefaultAlloc
+char* DefaultAlloc::mBeginFree = 0;
+char* DefaultAlloc::mEndFree = 0;
+size_t DefaultAlloc::mHeapSize = 0;
 
-__default_alloc::obj* volatile \
-	__default_alloc::free_list[__default_alloc::__LIST_SIZE] = \
+DefaultAlloc::obj* volatile \
+	DefaultAlloc::mFreeList[DefaultAlloc::E_LIST_SIZE] = \
 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-size_t __default_alloc::ROUND_UP(size_t bytes) 
+size_t DefaultAlloc::__roundUp(size_t bytes) 
 {
-	return ((bytes + __ALIGN - 1) & ~(__ALIGN - 1));
+	return ((bytes + E_ALIGN - 1) & ~(E_ALIGN - 1));
 }
 
-size_t __default_alloc::FREELIST_INDEX(size_t bytes) 
+size_t DefaultAlloc::__freeListIndex(size_t bytes) 
 {
-	return (bytes + __ALIGN - 1) / __ALIGN - 1;
+	return (bytes + E_ALIGN - 1) / E_ALIGN - 1;
 }
 
-size_t __default_alloc::get_heap_size() 
+size_t DefaultAlloc::getHeapSize() 
 {
-	return heap_size;
+	return mHeapSize;
 }
 
-void* __default_alloc::allocate(size_t bytes) 
+void* DefaultAlloc::allocate(size_t bytes) 
 {
-	if (bytes > __MAX_BLOCK_SIZE) 
+	if (bytes > E_MAX_BLOCK_SIZE) 
 	{
-		return __malloc_alloc::allocate(bytes);
+		return MallocAlloc::allocate(bytes);
 	}
 
 	obj * volatile * my_free_list;
 	obj * result;
 
-	my_free_list = free_list + FREELIST_INDEX(bytes);
+	my_free_list = mFreeList + __freeListIndex(bytes);
 
 	if (*my_free_list) 
 	{
@@ -123,19 +123,19 @@ void* __default_alloc::allocate(size_t bytes)
 	} 
 	else
 	{
-		return refill(ROUND_UP(bytes));
+		return __refill(__roundUp(bytes));
 	}
 
 	return result;
 }
 
-void* __default_alloc::refill(size_t bytes) 
+void* DefaultAlloc::__refill(size_t bytes) 
 {
 	obj * volatile * my_free_list;
 	obj *result, *current_block, *next_block;
 	size_t nsize = 20;
 
-	char *pool = memory_pool_alloc(bytes, nsize); 
+	char *pool = __memoryPoolAlloc(bytes, nsize); 
 	result = (obj*)pool;
 	if (nsize == 1) 
 	{
@@ -143,7 +143,7 @@ void* __default_alloc::refill(size_t bytes)
 	}
 
 	// *my_free_list points to the current free list
-	my_free_list = free_list + FREELIST_INDEX(bytes);
+	my_free_list = mFreeList + __freeListIndex(bytes);
 	*my_free_list = next_block = (obj*)(pool + bytes);
 
 	for (int i = 1; ; ++i) 
@@ -161,24 +161,24 @@ void* __default_alloc::refill(size_t bytes)
 	return result;
 }
 
-char* __default_alloc::memory_pool_alloc(size_t unit, size_t& nsize) 
+char* DefaultAlloc::__memoryPoolAlloc(size_t unit, size_t& nsize) 
 {
-	size_t bytes_left = end_free - begin_free;
+	size_t bytes_left = mEndFree - mBeginFree;
 	size_t total_bytes = unit * nsize; 
 	char *result;
 
 	// enough space 
 	if (total_bytes <= bytes_left) 
 	{
-		result = begin_free;
-		begin_free += total_bytes;
+		result = mBeginFree;
+		mBeginFree += total_bytes;
 		return result;
 	} 
 	else if (unit <= bytes_left)  // not less than 1 unit 
 	{
 		nsize = bytes_left / unit;
-		result = begin_free;
-		begin_free += (nsize * unit);
+		result = mBeginFree;
+		mBeginFree += (nsize * unit);
 		return result;
 	} 
 	else
@@ -187,62 +187,62 @@ char* __default_alloc::memory_pool_alloc(size_t unit, size_t& nsize)
 
 		if (bytes_left > 0) 
 		{
-			my_free_list = free_list + FREELIST_INDEX(bytes_left);
-			/*obj *p = (obj*)begin_free;
+			my_free_list = mFreeList + __freeListIndex(bytes_left);
+			/*obj *p = (obj*)mBeginFree;
 			p->next_free_block = *my_free_list;
 			*my_free_list = p;
 			*/
-			((obj*)begin_free)->next_free_block = *my_free_list;
-			*my_free_list = (obj*)begin_free;
+			((obj*)mBeginFree)->next_free_block = *my_free_list;
+			*my_free_list = (obj*)mBeginFree;
 		}
 
-		size_t bytes_to_get = total_bytes * 2 + ROUND_UP(heap_size >> 4);
-		begin_free = (char*)malloc(bytes_to_get);
-		// If alloc failed, find whether there are any free blocks in existed free_list
-		if (!begin_free) 
+		size_t bytes_to_get = total_bytes * 2 + __roundUp(mHeapSize >> 4);
+		mBeginFree = (char*)malloc(bytes_to_get);
+		// If alloc failed, find whether there are any free blocks in existed mFreeList
+		if (!mBeginFree) 
 		{
-			for (size_t now = unit + __ALIGN; now <= __MAX_BLOCK_SIZE; now += __ALIGN) 
+			for (size_t now = unit + E_ALIGN; now <= E_MAX_BLOCK_SIZE; now += E_ALIGN) 
 			{
-				my_free_list = free_list + FREELIST_INDEX(now);
+				my_free_list = mFreeList + __freeListIndex(now);
 				if (*my_free_list) 
 				{
-					begin_free = (char*)(*my_free_list);
+					mBeginFree = (char*)(*my_free_list);
 					*my_free_list = (*my_free_list)->next_free_block;
-					end_free = begin_free + now;
-					return memory_pool_alloc(unit, nsize);
+					mEndFree = mBeginFree + now;
+					return __memoryPoolAlloc(unit, nsize);
 				}
 			}
 			// Oooops, seems can't allocate any more
 			bytes_to_get = unit * 2;
-			begin_free = (char*)__malloc_alloc::allocate(bytes_to_get);
+			mBeginFree = (char*)MallocAlloc::allocate(bytes_to_get);
 		}
-		end_free = begin_free + bytes_to_get;
-		heap_size += bytes_to_get;
-		return memory_pool_alloc(unit, nsize);
+		mEndFree = mBeginFree + bytes_to_get;
+		mHeapSize += bytes_to_get;
+		return __memoryPoolAlloc(unit, nsize);
 	}
 }
 
-void __default_alloc::deallocate(void *p, size_t bytes) 
+void DefaultAlloc::deallocate(void *p, size_t bytes) 
 {
-	if (bytes > __MAX_BLOCK_SIZE) 
+	if (bytes > E_MAX_BLOCK_SIZE) 
 	{
-		__malloc_alloc::deallocate(p, bytes);
+		MallocAlloc::deallocate(p, bytes);
 		return;
 	}
 
 	obj *q = (obj*)p;
-	obj * volatile * my_free_list = free_list + FREELIST_INDEX(bytes);
+	obj * volatile * my_free_list = mFreeList + __freeListIndex(bytes);
 	q->next_free_block = *my_free_list;
 	*my_free_list = q;
 }
 
-void* __default_alloc::reallocate(void *p, size_t old_size, size_t new_size) 
+void* DefaultAlloc::reallocate(void *p, size_t old_size, size_t new_size) 
 {
-	if (new_size > __MAX_BLOCK_SIZE && old_size > __MAX_BLOCK_SIZE)  
-	{   // Not in free_list  
+	if (new_size > E_MAX_BLOCK_SIZE && old_size > E_MAX_BLOCK_SIZE)  
+	{   // Not in mFreeList  
 		return realloc(p, new_size);
 	}
-	if (ROUND_UP(new_size) == ROUND_UP(old_size)) 
+	if (__roundUp(new_size) == __roundUp(old_size)) 
 	{   // Points to the same block
 		return p;
 	}
