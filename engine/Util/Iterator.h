@@ -8,54 +8,86 @@ namespace Prelude
 namespace Util 
 {
 
-struct InputIteratorTag {};
-struct OuputIteratorTag {};
-struct ForwardIteratorTag : public InputIteratorTag {};
-struct BidirectionalIteratorTag : public ForwardIteratorTag {};
-struct RandomAccessIteratorTag : public BidirectionalIteratorTag {};
+// Iterator Type
 
-template <class Category, 
+/**
+  * Tag for InputIterator
+  */
+struct InputIteratorTag {};
+
+/**
+  * Tag for OutputIterator
+  */
+struct OuputIteratorTag {};
+
+/**
+  * Tag for ForwardIterator
+  * ForwardIterator has read-write access ability
+  */
+struct ForwardIteratorTag : public InputIteratorTag {};
+
+/**
+  * Tag for BidirectIterator
+  * BidirectIterator can access both forward and backward
+  */
+struct BidirectIteratorTag : public ForwardIteratorTag {};
+
+/**
+  * Tag for RandomIterator
+  * RandomIterator can access randomly
+  */
+struct RandomIteratorTag : public BidirectIteratorTag {};
+
+
+/**
+  * Default Iterator
+  */
+template <class IterType, 
 		  class T, 
-		  class Distance = ptrdiff_t, 
-	      class Pointer = T*, 
-		  class Reference = T&>
+		  class DistanceType = ptrdiff_t, 
+	      class PointerType = T*, 
+		  class ReferenceType = T&>
 struct Iterator
 {
-	typedef Category	iterator_category;
-	typedef T			value_type;
-	typedef Pointer		pointer;
-	typedef Reference	reference;
-	typedef Distance	difference_type;	
+	typedef IterType		IteratorType;
+	typedef T				ValueType;
+	typedef PointerType		Pointer;
+	typedef ReferenceType	Reference;
+	typedef DistanceType	Difference;	
 };
 
+/**
+  * Iterator-traits tool
+  * Traits the property of Iterator<I>
+  */
 template <class I>
 struct IteratorTraits
 {
-	typedef typename I::iterator_category	iterator_category;
-	typedef typename I::value_type			value_type;
-	typedef typename I::pointer				pointer;
-	typedef typename I::reference			reference;
-	typedef typename I::difference_type		difference_type;
+	typedef typename I::IteratorType		IteratorType;
+	typedef typename I::ValueType			ValueType;
+	typedef typename I::Pointer				Pointer;
+	typedef typename I::Reference			Reference;
+	typedef typename I::Difference			Difference;
 };
 
 template <class T>
 struct IteratorTraits<T*> 
 {
-	typedef RandomAccessIteratorTag		iterator_category;
-	typedef T							value_type;
-	typedef T*							pointer;
-	typedef T&							reference;
-	typedef ptrdiff_t					difference_type;
+	typedef RandomIteratorTag		IteratorType;
+	typedef T						ValueType;
+	typedef T*						Pointer;
+	typedef T&						Reference;
+	typedef ptrdiff_t				Difference;
 };
 
 template <class T>
 struct IteratorTraits<const T*>
 {
-	typedef RandomAccessIteratorTag		iterator_category;
-	typedef T							value_type;
-	typedef const T*					pointer;
-	typedef const T&					reference;
-	typedef ptrdiff_t					difference_type;
+	typedef RandomIteratorTag		IteratorType;
+	typedef T						ValueType;
+	typedef const T*				Pointer;
+	typedef const T&				Reference;
+	typedef ptrdiff_t				Difference;
 };
 
 } // end of namespace Util
