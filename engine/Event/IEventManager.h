@@ -3,7 +3,7 @@
 
 #include "Core/Config.h"
 #include "Event/EventType.h"
-#include "Event/IEvent.h"
+#include "Event/Event.h"
 #include "Event/IEventListener.h"
 
 #include <memory>

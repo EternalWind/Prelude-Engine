@@ -35,8 +35,8 @@ bool StandardEventManager::validateEventType(const EventType& type) const
 void StandardEventManager::queueEvent(const EventSP event)
 {
 	// Only queues the valid and registered ones. Besides, wild card events are not allowed! Wild card event type is for listeners only!
-	if (event.get() != nullptr && event->getType().getIdentifier() != EventType::WILD_CARD_EVENT_TYPE_ID && validateEventType(event->getType())
-		&& mRegisteredTypes.find(event->getType()) != mRegisteredTypes.end())
+	if (event.get() != nullptr && event->getEventType().getIdentifier() != EventType::WILD_CARD_EVENT_TYPE_ID && validateEventType(event->getEventType())
+		&& mRegisteredTypes.find(event->getEventType()) != mRegisteredTypes.end())
 	{
 		mQueues[mActiveQueue].push_back(event);
 	}
@@ -50,7 +50,7 @@ bool StandardEventManager::eliminateEvent(const EventType& type, bool all)
 	{
 		for (EventQueueQueryResult query = mQueues[mActiveQueue].begin() ; query != mQueues[mActiveQueue].end() ; )
 		{
-			if ((*query)->getType() == type)
+			if ((*query)->getEventType() == type)
 			{
 				query = mQueues[mActiveQueue].erase(query);
 
@@ -93,7 +93,7 @@ bool StandardEventManager::dispatch(const clock_t time_limit)
 		{
 			// Feed the wild card listeners first.
 			ListenerList wild_listeners = mListenerMapping[EventType::WILD_CARD_EVENT_TYPE_STRING];
-			ListenerList listeners = mListenerMapping[event_query->getType()];
+			ListenerList listeners = mListenerMapping[event_query->getEventType()];
 			bool has_consumed = false;
 
 			for (EventListenerQueryResult wild_card_listener_query = wild_listeners.begin() ; wild_card_listener_query != wild_listeners.end() ; ++wild_card_listener_query)
@@ -143,11 +143,11 @@ bool StandardEventManager::triggerEvent(const EventSP event)
 	bool result = false;
 
 	// Only processes valid events.
-	if (event.get() != nullptr && validateEventType(event->getType()) && mRegisteredTypes.find(event->getType()) != mRegisteredTypes.end())
+	if (event.get() != nullptr && validateEventType(event->getEventType()) && mRegisteredTypes.find(event->getEventType()) != mRegisteredTypes.end())
 	{
 		// Again, feed the wild card listeners first.
 		ListenerList wild_card_listeners = mListenerMapping[EventType::WILD_CARD_EVENT_TYPE_STRING];
-		ListenerList listeners = mListenerMapping[event->getType()];
+		ListenerList listeners = mListenerMapping[event->getEventType()];
 			
 		for (EventListenerQueryResult wild_card_query = wild_card_listeners.begin() ; wild_card_query != wild_card_listeners.end() ; ++wild_card_query)
 		{
