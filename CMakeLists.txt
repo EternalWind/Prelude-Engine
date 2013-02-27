@@ -7,6 +7,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(BUILD_STATIC FALSE CACHE BOOL "true to build static libraries, false to build dynamic libraries (preferred)")
+set(BUILD_SAMPLES FALSE CACHE BOOL "true to build the samples.")
 
 if(BUILD_STATIC)
     add_definitions(-DPRELUDE_STATIC)
@@ -25,5 +26,8 @@ endif()
 include_directories(SYSTEM)
 
 add_subdirectory(engine)
+
+if (BUILD_SAMPLES)
 add_subdirectory(sample)
+endif()
 
