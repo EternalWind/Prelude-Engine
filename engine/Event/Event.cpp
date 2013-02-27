@@ -8,7 +8,7 @@ namespace Prelude
 {
 namespace Event
 {
-Event::Event(const clock_t time_stamp, const EventType type, const shared_ptr<EventData> data)
+Event::Event(const clock_t time_stamp, const EventType type, const EventDataSP data)
 	: mTimeStamp(time_stamp),
       mType(type),
       mData(data) {}
@@ -58,12 +58,12 @@ EventType Event::getEventType() const
     return mType;
 }
 
-void Event::setEventData(const shared_ptr<EventData> data)
+void Event::setEventData(const EventDataSP data)
 {
     mData = data;
 }
 
-shared_ptr<EventData> Event::getEventData() const
+EventDataSP Event::getEventData() const
 {
     return mData;
 }

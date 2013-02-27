@@ -21,9 +21,9 @@ class PRELUDE_ENGINE EventType : implements IO::ISerializable
 public:
 	/**
 	  * The constructor.
-	  * @param str The type name of an event which is used to generate an unique identifier.
+	  * @param name The type name of an event which is used to generate an unique identifier.
 	  */
-	EventType(string str);
+	EventType(string name);
 
 	/**
 	  * Gets the original string that is used to generate the identifier.

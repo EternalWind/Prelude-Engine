@@ -26,37 +26,37 @@ public:
 	  * The constructor.
 	  * @param time_stamp The time stamp when the event occurs.
 	  */
-	Event(const clock_t time_stamp, const EventType type, const shared_ptr<EventData> data = nullptr);
+	Event(const clock_t time_stamp, const EventType type, const EventDataSP data = nullptr);
 
 	/**
 	  * @see ISerializable
 	  */
-	void serialize(OUT IO::IStream& stream) const;
+	virtual void serialize(OUT IO::IStream& stream) const;
 
 	/**
 	  * @see ISerializable
 	  */
-	void deserialize(IN IO::IStream& stream);
+	virtual void deserialize(IN IO::IStream& stream);
 
 	/**
 	  * @see ISerializable
 	  */
-	string toString() const;
+	virtual string toString() const;
 
 	clock_t getTimeStamp() const;
 
     EventType getEventType() const;
 
-    void setEventData(const shared_ptr<EventData> data);
+    void setEventData(const EventDataSP data);
 
-    shared_ptr<EventData> getEventData() const;
+    EventDataSP getEventData() const;
 
-	~Event();
+	virtual ~Event();
 
 protected:
 	clock_t mTimeStamp;
     EventType mType;
-    shared_ptr<EventData> mData;
+    EventDataSP mData;
 };
 
 typedef shared_ptr<Event> EventSP;

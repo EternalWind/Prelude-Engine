@@ -11,9 +11,9 @@ namespace Event
 const string EventType::WILD_CARD_EVENT_TYPE_STRING = "wild_card_event";
 const uint32_t EventType::WILD_CARD_EVENT_TYPE_ID = 0;
 
-EventType::EventType(string str)
-	: mOrigString(str),
-	  mIdentifier(_calculateHashValue(str)) {}
+EventType::EventType(string name)
+	: mOrigString(name),
+	  mIdentifier(_calculateHashValue(name)) {}
 
 string EventType::getOrigString() const
 {

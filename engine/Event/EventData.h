@@ -65,6 +65,9 @@ namespace Event
 
         AttributeTable mAttributes; //!< The attribute table.
     };
+
+	typedef shared_ptr<EventData> EventDataSP;
+
 } // End of namespace Event
 } // End of namespace Prelude
 
