@@ -2,6 +2,7 @@
 #define PL_CORE_CONFIG
 
 #include <cstdint>
+#include <assert.h>
 
 #ifdef Prelude_EXPORTS
 #define PRELUDE_ENGINE __declspec(dllexport)

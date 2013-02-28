@@ -67,7 +67,7 @@ uint32_t EventType::_calculateHashValue(string str) const
 
 void EventType::serialize(OUT IO::IStream& stream) const
 {
-	stream << (byte4)mIdentifier << (byte4)mOrigString.size();
+	stream << (byte4)mOrigString.size();
 	stream.write((const byte*)mOrigString.c_str(), (byte4)mOrigString.size());
 }
 
@@ -76,12 +76,14 @@ void EventType::deserialize(IN IO::IStream& stream)
 	byte4 size = 0;
 	shared_ptr<byte> buffer;
 
-	stream >> (byte4&)mIdentifier >> size;
+	stream >> size;
 
 	buffer.reset(new byte[size]);
 	stream.read(buffer.get(), size);
 
 	mOrigString = string((const char*)buffer.get(), size);
+
+	_calculateHashValue(mOrigString);
 }
 
 string EventType::toString() const
